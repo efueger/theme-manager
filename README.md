@@ -1,6 +1,12 @@
 A Simple theme manager that can be used with any php application using PHP 5.5.9 or above. It can also be used with [Laravel 5](http://laravel.com/).
 
-[![Circle CI](https://circleci.com/gh/monkblog/theme-manager.svg?style=svg)](https://circleci.com/gh/monkblog/theme-manager) [![Code Climate](https://codeclimate.com/github/monkblog/theme-manager/badges/gpa.svg)](https://codeclimate.com/github/monkblog/theme-manager) [![Test Coverage](https://codeclimate.com/github/monkblog/theme-manager/badges/coverage.svg)](https://codeclimate.com/github/monkblog/theme-manager/coverage)
+[![Circle CI](https://circleci.com/gh/monkblog/theme-manager.svg?style=svg)](https://circleci.com/gh/monkblog/theme-manager)
+[![Code Climate](https://codeclimate.com/github/monkblog/theme-manager/badges/gpa.svg)](https://codeclimate.com/github/monkblog/theme-manager)
+[![Test Coverage](https://codeclimate.com/github/monkblog/theme-manager/badges/coverage.svg)](https://codeclimate.com/github/monkblog/theme-manager/coverage)
+[![Total Downloads](https://poser.pugx.org/monkblog/theme-manager/d/total.svg)](https://packagist.org/packages/monkblog/theme-manager)
+[![Latest Stable Version](https://poser.pugx.org/monkblog/theme-manager/v/stable.svg)](https://packagist.org/packages/monkblog/theme-manager)
+[![Latest Unstable Version](https://poser.pugx.org/monkblog/theme-manager/v/unstable.svg)](https://packagist.org/packages/monkblog/theme-manager)
+[![License](https://poser.pugx.org/monkblog/theme-manager/license.svg)](https://packagist.org/packages/monkblog/theme-manager)
 
 # Requirements
 
