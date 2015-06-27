@@ -2,16 +2,10 @@
 
 namespace ThemeManager\Exceptions;
 
-use ThemeManager\Theme;
-use OutOfBoundsException;
-use Exception;
+class EmptyThemeName extends NoThemeName {
 
-
-class EmptyThemeName extends OutOfBoundsException {
-
-    public function __construct( Theme $theme, $code = 0, Exception $previous = null ) {
-        $message = "Theme {$theme->getYmlPath()} 'name' entry is empty";
-        parent::__construct($message, $code, $previous);
+    public function __construct( $themePath, $code = 0, \Exception $previous = null ) {
+        parent::__construct( $themePath, "'name' entry is empty", $code, $previous );
     }
 
 }

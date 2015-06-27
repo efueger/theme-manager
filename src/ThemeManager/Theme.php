@@ -88,12 +88,12 @@ class Theme {
         $info = $this->getInfo();
         if( is_array( $info ) && array_key_exists( 'name', $info ) ) {
             if( empty( $info[ 'name' ] ) ) {
-                throw new EmptyThemeName( $this );
+                throw new EmptyThemeName( $this->getYmlPath() );
             }
             $this->name = $info[ 'name' ];
         }
         else {
-            throw new NoThemeName( $this );
+            throw new NoThemeName( $this->getYmlPath() );
         }
         return $this;
     }
@@ -102,7 +102,7 @@ class Theme {
      * @return string
      */
     public function getYmlPath() {
-        return $this->yml;
+        return $this->yml ? : '{undefined}';
     }
 
     /**
