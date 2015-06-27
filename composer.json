@@ -1,5 +1,6 @@
 {
     "name": "monkblog/theme-manager",
+    "description": "A simple theme manager",
     "license": "MIT",
     "authors": [
       {
@@ -9,7 +10,8 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "illuminate/support": "5.1.*"
+        "illuminate/support": "5.1.*",
+        "illuminate/filesystem": "5.1.*"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
@@ -17,8 +19,16 @@
         "codeclimate/php-test-reporter": "dev-master"
     },
     "autoload": {
+        "files": [
+            "helpers.php"
+        ],
         "psr-4": {
             "ThemeManager\\": "src/ThemeManager/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
         }
     }
 }
