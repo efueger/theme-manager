@@ -2,9 +2,9 @@
 
 namespace ThemeManager;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider as ServiceProviderSupport;
 
-class ThemeManagerServiceProvider extends ServiceProvider
+class ServiceProvider extends ServiceProviderSupport
 {
     /**
      * Bootstrap any application services.
@@ -23,6 +23,8 @@ class ThemeManagerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind( 'theme.manager', function () {
+            return theme_manager();
+        } );
     }
 }

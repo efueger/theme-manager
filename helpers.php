@@ -18,3 +18,12 @@ if( ! function_exists( 'themes_base_path' ) ) {
         return false;
     }
 }
+
+if( ! function_exists( 'theme_manager' ) ) {
+    /**
+     * @return \ThemeManager\ThemeManager
+     */
+    function theme_manager() {
+        return new \ThemeManager\ThemeManager( \ThemeManager\Starter::start() );
+    }
+}

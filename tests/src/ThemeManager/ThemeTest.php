@@ -45,15 +45,14 @@ class ThemeTest extends PHPUnit_Framework_TestCase {
      * @expectedException \ThemeManager\Exceptions\NoThemeName
      */
     public function testThemeUndefinedName() {
-        new Theme( themes_base_path() . '/../no-name' );
+        new Theme( themes_base_path() . '/../themes-test/no-name' );
     }
 
-
     /**
-     * @expectedException \ThemeManager\Exceptions\NoThemeName
+     * @expectedException \ThemeManager\Exceptions\EmptyThemeName
      */
     public function testThemeEmptyName() {
-        new Theme( themes_base_path() . '/../empty-name' );
+        new Theme( themes_base_path() . '/../themes-test/empty-name' );
     }
 
 }

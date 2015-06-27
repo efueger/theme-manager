@@ -3,6 +3,7 @@
 namespace ThemeManager;
 
 use Symfony\Component\Yaml\Yaml;
+use ThemeManager\Exceptions\EmptyThemeName;
 use ThemeManager\Exceptions\NoThemeName;
 
 class Theme {
@@ -79,12 +80,16 @@ class Theme {
 
     /**
      * @throws \ThemeManager\Exceptions\NoThemeName When themes name isn't defined or empty
+     * @throws \ThemeManager\Exceptions\EmptyThemeName When themes name isn't defined or empty
      *
      * @return $this
      */
     protected function setName() {
         $info = $this->getInfo();
-        if( is_array( $info ) && array_key_exists( 'name', $info ) && !empty( $info[ 'name' ] ) ) {
+        if( is_array( $info ) && array_key_exists( 'name', $info ) ) {
+            if( empty( $info[ 'name' ] ) ) {
+                throw new EmptyThemeName( $this );
+            }
             $this->name = $info[ 'name' ];
         }
         else {

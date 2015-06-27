@@ -30,7 +30,7 @@ class Starter {
      *
      * @throws \ThemeManager\Exceptions\MissingThemesFolder When themes folder does not exist
      *
-     * @return void|null
+     * @return \ThemeManager\ThemeCollection
      */
     public static function start( $basePath = null, Finder $finder = null ) {
         self::$themesFolder = $basePath ? : themes_base_path();
@@ -41,7 +41,7 @@ class Starter {
 
         self::$finder = $finder ? : new Finder;
 
-        //Look for theme.yml
+        //Look for theme.yml and theme.yaml
         self::$themes = array_merge( self::$themes, self::find( 'theme.yml' ), self::find( 'theme.yaml' ) ) ;
 
         return new ThemeCollection( self::$themes );

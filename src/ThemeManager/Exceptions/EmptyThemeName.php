@@ -7,10 +7,10 @@ use OutOfBoundsException;
 use ThemeManager\Theme;
 
 
-class NoThemeName extends OutOfBoundsException {
+class EmptyThemeName extends OutOfBoundsException {
 
     public function __construct( Theme $theme, $code = 0, Exception $previous = null ) {
-        $message = "Theme {$theme->getYmlPath()} doesn't define 'name'";
+        $message = "Theme {$theme->getYmlPath()} 'name' entry is empty";
         parent::__construct($message, $code, $previous);
     }
 
