@@ -2,9 +2,9 @@
 
 namespace ThemeManager\Exceptions;
 
-use Exception;
-use OutOfBoundsException;
 use ThemeManager\Theme;
+use OutOfBoundsException;
+use Exception;
 
 
 class EmptyThemeName extends OutOfBoundsException {

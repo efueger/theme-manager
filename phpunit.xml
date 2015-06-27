@@ -22,6 +22,10 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
+            <exclude>
+                <file>./src/ThemeManager/ServiceProvider.php</file>
+                <directory>./src/ThemeManager/Facade</directory>
+            </exclude>
         </whitelist>
     </filter>
     <php>
