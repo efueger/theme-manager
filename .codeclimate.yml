@@ -3,3 +3,5 @@ languages:
 exclude_paths:
 - "src/ThemeManager/ServiceProvider.php"
 - "src/ThemeManager/Facade/"
+- "tests/"
+- "vendor/"
