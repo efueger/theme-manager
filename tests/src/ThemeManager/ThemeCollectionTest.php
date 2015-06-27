@@ -5,7 +5,8 @@ namespace ThemeManager;
 use PHPUnit_Framework_TestCase;
 
 
-class ThemeCollectionTest extends PHPUnit_Framework_TestCase {
+class ThemeCollectionTest extends PHPUnit_Framework_TestCase
+{
 
     /**
      * @var ThemeCollection
@@ -25,7 +26,7 @@ class ThemeCollectionTest extends PHPUnit_Framework_TestCase {
 
     public function setUp()
     {
-        $this->theme = new Theme( themes_base_path() . '/demo');
+        $this->theme = new Theme( themes_base_path() . '/demo' );
         $this->themeArray = [ $this->theme ];
 
         $this->collection = new ThemeCollection( $this->themeArray );
@@ -54,6 +55,6 @@ class ThemeCollectionTest extends PHPUnit_Framework_TestCase {
         $allThemeNames = $this->collection->allThemeNames();
         $this->assertTrue( is_array( $allThemeNames ) && !empty( $allThemeNames ) );
 
-        $this->assertEquals( 'demo-theme-yml', array_shift($allThemeNames) );
+        $this->assertEquals( 'demo-theme-yml', array_shift( $allThemeNames ) );
     }
 }

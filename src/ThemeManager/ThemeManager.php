@@ -2,7 +2,8 @@
 
 namespace ThemeManager;
 
-class ThemeManager {
+class ThemeManager
+{
 
     /**
      * @var \ThemeManager\ThemeCollection
@@ -14,7 +15,8 @@ class ThemeManager {
      */
     private $themeNames;
 
-    public function __construct( ThemeCollection $themes ) {
+    public function __construct( ThemeCollection $themes )
+    {
         $this->themes = $themes;
         $this->themeNames = $themes->allThemeNames();
     }
@@ -22,7 +24,8 @@ class ThemeManager {
     /**
      * @return array
      */
-    public function getAllThemeNames() {
+    public function getAllThemeNames()
+    {
         return $this->themes()->allThemeNames();
     }
 
@@ -31,7 +34,8 @@ class ThemeManager {
      *
      * @return null|Theme
      */
-    public function getTheme( $name ) {
+    public function getTheme( $name )
+    {
         return $this->themes()->getTheme( $name );
     }
 
@@ -40,21 +44,24 @@ class ThemeManager {
      *
      * @return bool
      */
-    public function themeExists( $name ) {
-        return $this->themes()->themeExists($name);
+    public function themeExists( $name )
+    {
+        return $this->themes()->themeExists( $name );
     }
 
     /**
      * @return \ThemeManager\ThemeCollection
      */
-    public function themes() {
+    public function themes()
+    {
         return $this->themes;
     }
 
     /**
      * @return \ThemeManager\ThemeCollection
      */
-    public function all() {
+    public function all()
+    {
         return $this->themes();
     }
 
@@ -63,8 +70,10 @@ class ThemeManager {
      *
      * @return $this
      */
-    public function addThemeLocation( $path ) {
+    public function addThemeLocation( $path )
+    {
         $this->themes = $this->themes()->merge( Starter::start( $path )->all() );
+
         return $this;
     }
 

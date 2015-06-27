@@ -6,7 +6,8 @@ use Symfony\Component\Yaml\Yaml;
 use ThemeManager\Exceptions\EmptyThemeName;
 use ThemeManager\Exceptions\NoThemeName;
 
-class Theme {
+class Theme
+{
 
     /**
      * @var array
@@ -43,38 +44,45 @@ class Theme {
      * @param      $path
      * @param bool $yaml
      */
-    public function __construct( $path, $yaml = false ) {
+    public function __construct( $path, $yaml = false )
+    {
         $this->basePath = $path;
         $this->ymlFileExtension = $yaml ? '.yaml' : '.yml';
         $this->setThemeYmlPath()
-             ->setAutoloadPath()
-             ->setInfo()
-             ->setName();
+            ->setAutoloadPath()
+            ->setInfo()
+            ->setName();
     }
 
     /**
      * @return $this
      */
-    protected function setThemeYmlPath() {
+    protected function setThemeYmlPath()
+    {
         $this->yml = $this->basePath( 'theme' . $this->ymlExtension() );
+
         return $this;
     }
 
     /**
      * @return $this
      */
-    protected function setAutoloadPath() {
+    protected function setAutoloadPath()
+    {
         if( file_exists( $this->basePath( 'vendor/autoload.php' ) ) ) {
             $this->autoload = $this->basePath( 'vendor/autoload.php' );
         }
+
         return $this;
     }
 
     /**
      * @return $this
      */
-    protected function setInfo() {
+    protected function setInfo()
+    {
         $this->info = Yaml::parse( $this->yml );
+
         return $this;
     }
 
@@ -84,7 +92,8 @@ class Theme {
      *
      * @return $this
      */
-    protected function setName() {
+    protected function setName()
+    {
         $info = $this->getInfo();
         if( is_array( $info ) && array_key_exists( 'name', $info ) ) {
             if( empty( $info[ 'name' ] ) ) {
@@ -95,59 +104,69 @@ class Theme {
         else {
             throw new NoThemeName( $this->getYmlPath() );
         }
+
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getYmlPath() {
-        return $this->yml ? : '{undefined}';
+    public function getYmlPath()
+    {
+        return $this->yml ?: '{undefined}';
     }
 
     /**
      * @return null|string
      */
-    public function getAutoloadPath() {
+    public function getAutoloadPath()
+    {
         return $this->autoload;
     }
 
     /**
      * @return $this
      */
-    public function registerAutoload() {
+    public function registerAutoload()
+    {
         if( !is_null( $this->getAutoloadPath() ) ) {
             include_once "{$this->getAutoloadPath()}";
         }
+
         return $this;
     }
 
     /**
      * @return string
      */
-    public function ymlExtension() {
+    public function ymlExtension()
+    {
         return $this->ymlFileExtension;
     }
 
     /**
      * @return array
      */
-    public function getInfo() {
+    public function getInfo()
+    {
         return $this->info;
     }
 
     /**
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
     /**
      * @return $this
      */
-    public function setup() {
+    public function setup()
+    {
         $this->registerAutoload();
+
         return $this;
     }
 
@@ -156,7 +175,8 @@ class Theme {
      *
      * @return string
      */
-    public function basePath( $path = null ) {
+    public function basePath( $path = null )
+    {
         return $this->basePath . ( $path ? DIRECTORY_SEPARATOR . $path : $path );
     }
 

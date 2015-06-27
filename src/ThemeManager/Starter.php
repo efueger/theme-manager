@@ -6,12 +6,13 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use ThemeManager\Exceptions\MissingThemesFolder;
 
-class Starter {
+class Starter
+{
 
     /**
      * @var array
      */
-    private static $themes = [];
+    private static $themes = [ ];
 
     /**
      * @var Finder
@@ -32,17 +33,18 @@ class Starter {
      *
      * @return \ThemeManager\ThemeCollection
      */
-    public static function start( $basePath = null, Finder $finder = null ) {
-        self::$themesFolder = $basePath ? : themes_base_path();
+    public static function start( $basePath = null, Finder $finder = null )
+    {
+        self::$themesFolder = $basePath ?: themes_base_path();
 
         if( !is_dir( self::$themesFolder ) ) {
             throw new MissingThemesFolder( self::$themesFolder );
         }
 
-        self::$finder = $finder ? : new Finder;
+        self::$finder = $finder ?: new Finder;
 
         //Look for theme.yml and theme.yaml
-        self::$themes = array_merge( self::$themes, self::find( 'theme.yml' ), self::find( 'theme.yaml' ) ) ;
+        self::$themes = array_merge( self::$themes, self::find( 'theme.yml' ), self::find( 'theme.yaml' ) );
 
         return new ThemeCollection( self::$themes );
     }
@@ -53,8 +55,9 @@ class Starter {
      *
      * @return array
      */
-    private static function find( $file, $depth = '<= 2' ) {
-        $themes = [];
+    private static function find( $file, $depth = '<= 2' )
+    {
+        $themes = [ ];
         $files = self::$finder->in( self::$themesFolder )->files()->name( $file )->depth( $depth )->followLinks();
         if( !empty( $files ) ) {
             /* @var $file SplFileInfo */

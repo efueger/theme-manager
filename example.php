@@ -1,7 +1,15 @@
 <?php
+//Via new
+$themeManager = new \ThemeManager\ThemeManager( \ThemeManager\Starter::start() );
+
+//Optionally pass initial base path in
+$themeManager = new \ThemeManager\ThemeManager( \ThemeManager\Starter::start( __DIR__ . '/path/to/themes/' ) );
 
 //Via Helper
 $themeManager = theme_manager();
+
+//Optionally pass initial base path in
+$themeManager = theme_manager( __DIR__ . '/path/to/themes/' );
 
 //ThemeCollection
 $allThemes = $themeManager->all();

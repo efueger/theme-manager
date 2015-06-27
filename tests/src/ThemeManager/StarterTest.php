@@ -5,13 +5,16 @@ namespace ThemeManager;
 use PHPUnit_Framework_TestCase;
 
 
-class StarterTest extends PHPUnit_Framework_TestCase {
+class StarterTest extends PHPUnit_Framework_TestCase
+{
 
-    public function tearDown() {
+    public function tearDown()
+    {
         putenv( "APP_ENV=testing" );
     }
 
-    public function testStart() {
+    public function testStart()
+    {
         $themeCollection = Starter::start();
 
         $this->assertInstanceOf( 'ThemeManager\\ThemeCollection', $themeCollection );
@@ -20,15 +23,17 @@ class StarterTest extends PHPUnit_Framework_TestCase {
     /**
      * @expectedException \ThemeManager\Exceptions\MissingThemesFolder
      */
-    public function testStartFail() {
-        Starter::start('fake/src/testing');
+    public function testStartFail()
+    {
+        Starter::start( 'fake/src/testing' );
     }
 
     /**
      * @expectedException \ThemeManager\Exceptions\MissingThemesFolder
      */
-    public function testStartFailNonTestingEnv() {
-        putenv("APP_ENV=local");
+    public function testStartFailNonTestingEnv()
+    {
+        putenv( "APP_ENV=local" );
 
         Starter::start();
     }

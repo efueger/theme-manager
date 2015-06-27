@@ -44,16 +44,27 @@ ThemeManager::themeExists( 'theme-name' );
 ThemeManager::getTheme( 'theme-name' );
 ```
 
-If you have a secondary `themes` folder you add it to the ThemeManager:
+If you have a secondary `themes` folder you can add all of themes to the ThemeManager by using:
 ```php
 ThemeManager::addThemeLocation( __DIR__ . '/path/to/alternative/themes-folder' );
 ```
 
 # Using with any php application
 
+[example.php](https://github.com/monkblog/theme-manager/blob/master/example.php)
+
 ```php
+//Via new
+$themeManager = new \ThemeManager\ThemeManager( \ThemeManager\Starter::start() );
+
+//Optionally pass initial base path in
+$themeManager = new \ThemeManager\ThemeManager( \ThemeManager\Starter::start( __DIR__ . '/path/to/themes/' ) );
+
 //Via Helper
 $themeManager = theme_manager();
+
+//Optionally pass initial base path in
+$themeManager = theme_manager( __DIR__ . '/path/to/themes/' );
 
 //ThemeCollection
 $allThemes = $themeManager->all();
