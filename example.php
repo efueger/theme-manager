@@ -2,13 +2,13 @@
 //Via new
 $themeManager = new \ThemeManager\ThemeManager( \ThemeManager\Starter::start() );
 
-//Optionally pass initial base path in
+//Optionally pass in initial base path
 $themeManager = new \ThemeManager\ThemeManager( \ThemeManager\Starter::start( __DIR__ . '/path/to/themes/' ) );
 
 //Via Helper
 $themeManager = theme_manager();
 
-//Optionally pass initial base path in
+//Optionally pass in initial base path
 $themeManager = theme_manager( __DIR__ . '/path/to/themes/' );
 
 //ThemeCollection
