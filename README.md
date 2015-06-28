@@ -44,7 +44,7 @@ name: my-theme
 # Bootstrapping Theme Classes
 Bootstrapping theme Service Provider(s) or other important classes before the application run:
 
-*For Laravel users: this code snippet is probably best placed in `bootstrap/autoload.php` file of your project*
+*For Laravel users: this code snippet is probably best placed in `bootstrap/autoload.php`*
 
 ```php
 \ThemeManager\Starter::bootstrapAutoload();
