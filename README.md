@@ -22,7 +22,7 @@ Require this package with Composer
 composer require monkblog/theme-manager 1.0.x
 ```
 
-# Using Laravel
+# Using with Laravel
 
 Once Composer has installed or updated your packages, you need to register ThemeManager with Laravel. Go into your `config/app.php`, find the `providers` key and add:
 
