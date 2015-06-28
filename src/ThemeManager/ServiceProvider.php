@@ -16,7 +16,7 @@ class ServiceProvider extends ServiceProviderSupport
     {
         $this->publishes([
             __DIR__ . '/config/theme-manager.php' => config_path( 'theme-manager.php' ),
-        ]);
+        ], 'theme');
     }
 
     /**

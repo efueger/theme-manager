@@ -36,12 +36,30 @@ You can add the ThemeManager Facade, to have easier access to the ThemeManager g
 'ThemeManager' => 'ThemeManager\Facade\ThemeManager',
 ```
 
+#### Usages:
+
 ```php
 ThemeManager::all();
 ThemeManager::getAllThemeNames();
 
 ThemeManager::themeExists( 'theme-name' );
 ThemeManager::getTheme( 'theme-name' );
+```
+
+#### Override the base themes path:
+
+Publish config:
+
+```
+php artisan vendor:publish --tag=theme
+```
+Go to `config/theme-manager.php` and change the `base_path` to the folder you want to use.
+```php
+<?php
+
+return [
+    'base_path' => __DIR__ . '/../path/to/themes-folder',
+];
 ```
 
 If you have a secondary `themes` folder you can add all of the themes to the ThemeManager by using:
