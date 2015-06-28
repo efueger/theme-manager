@@ -2,6 +2,7 @@
 
 namespace ThemeManager;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as ServiceProviderSupport;
 
 class ServiceProvider extends ServiceProviderSupport
@@ -13,7 +14,9 @@ class ServiceProvider extends ServiceProviderSupport
      */
     public function boot()
     {
-        //
+        $this->publishes([
+            __DIR__ . '/config/theme-manager.php' => config_path( 'theme-manager.php' ),
+        ]);
     }
 
     /**
@@ -24,7 +27,7 @@ class ServiceProvider extends ServiceProviderSupport
     public function register()
     {
         $this->app->bind( 'theme.manager', function () {
-            return theme_manager();
+            return theme_manager( Config::get( 'theme-manager.base_path', null ) );
         } );
     }
 }
