@@ -22,6 +22,39 @@ Require this package with Composer
 composer require monkblog/theme-manager 1.0.x
 ```
 
+#### Note:
+This package assumes that you have a `themes` folder (this can be overwritten via `Starter::start(__DIR__.'/path')`, see below) containing all your themes at the root of your project. 
+Each theme will need a `theme.yml` or `theme.yaml` with at least a `name` entry defined in the folder.
+
+(e.g. `themes/my-theme/theme.yml`)
+```yaml
+name: my-theme
+```
+
+##### Structure Example
+- app/
+- public/
+- themes/
+  - my-theme
+    - theme.yml
+  - my-other-theme
+    - theme.yml
+- vendor/
+
+# Bootstrapping Theme Classes
+Bootstrapping theme Service Provider(s) or other important classes before the application run:
+
+*For Laravel users: this code snippet is probably best placed in `bootstrap/autoload.php` file of your project*
+
+```php
+\ThemeManager\Starter::bootstrapAutoload();
+```
+
+You can also optionally pass in a path to your themes folder if it's different the default:
+```php
+\ThemeManager\Starter::bootstrapAutoload( '/path/to/theme-folder' );
+```
+
 # Using with Laravel
 
 Once Composer has installed or updated your packages, you need to register ThemeManager with Laravel. Go into your `config/app.php`, find the `providers` key and add:
@@ -62,13 +95,9 @@ return [
 ];
 ```
 
-Bootstrapping theme Service Provider or other important class before application run:
-*Probably best put in `/bootstrap/autoload.php`*
-```php
-\ThemeManager\Starter::bootstrapAutoload();
-```
-
+#### Adding more Themes folder to Manager
 If you have a secondary `themes` folder you can add all of the themes to the ThemeManager by using:
+
 ```php
 ThemeManager::addThemeLocation( __DIR__ . '/path/to/alternative/themes-folder' );
 ```
@@ -77,7 +106,7 @@ ThemeManager::addThemeLocation( __DIR__ . '/path/to/alternative/themes-folder' )
 
 [example.php](https://github.com/monkblog/theme-manager/blob/master/example.php)
 
-Create the ThemeManager:
+#### Create the ThemeManager:
 
 ```php
 //Via new
@@ -93,7 +122,7 @@ $themeManager = theme_manager();
 $themeManager = theme_manager( __DIR__ . '/path/to/themes/' );
 ```
 
-Using the ThemeManager:
+#### Using the ThemeManager:
 
 ```php
 //ThemeCollection
@@ -118,9 +147,13 @@ $firstTheme = $allThemes->first();
 $lastTheme = $allThemes->last();
 ```
 
-Add a second theme location:
+#### Add a second theme location:
 
 ```php
 //Add another location of themes to the ThemeManager
 $themeManager->addThemeLocation( __DIR__ . '/path/to/alternative/themes-folder' );
 ```
+
+### License
+
+theme-manage is open-sourced package licensed under the MIT license
