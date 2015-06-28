@@ -23,7 +23,7 @@ composer require monkblog/theme-manager 1.0.x
 ```
 
 #### Note:
-This package assumes that you have a `themes` folder (this can be overwritten via `Starter::start(__DIR__.'/path')`, see below) containing all your themes at the root of your project. 
+This package assumes that you have a `themes` folder (this can be overwritten via `Starter::start(__DIR__.'/path')`, read more below) at the root of your project containing all your theme folders. 
 Each theme will need a `theme.yml` or `theme.yaml` with at least a `name` entry defined in the folder.
 
 (e.g. `themes/my-theme/theme.yml`)
@@ -50,7 +50,7 @@ Bootstrapping theme Service Provider(s) or other important classes before the ap
 \ThemeManager\Starter::bootstrapAutoload();
 ```
 
-You can also optionally pass in a path to your themes folder if it's different the default:
+You can also optionally pass in a path to your themes folder if it's different than the default:
 ```php
 \ThemeManager\Starter::bootstrapAutoload( '/path/to/theme-folder' );
 ```
@@ -76,7 +76,8 @@ ThemeManager::all();
 ThemeManager::getAllThemeNames();
 
 ThemeManager::themeExists( 'theme-name' );
-ThemeManager::getTheme( 'theme-name' );
+$theme = ThemeManager::getTheme( 'theme-name' );
+$themeName = $theme->getName();
 ```
 
 #### Override the base themes path:
@@ -156,4 +157,4 @@ $themeManager->addThemeLocation( __DIR__ . '/path/to/alternative/themes-folder' 
 
 ### License
 
-theme-manage is open-sourced package licensed under the MIT license
+This package is open-sourced software licensed under the MIT license.
