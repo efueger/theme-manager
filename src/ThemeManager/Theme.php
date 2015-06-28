@@ -87,25 +87,33 @@ class Theme
     }
 
     /**
-     * @throws \ThemeManager\Exceptions\NoThemeName When themes name isn't defined or empty
-     * @throws \ThemeManager\Exceptions\EmptyThemeName When themes name isn't defined or empty
+     * @throws \ThemeManager\Exceptions\NoThemeName When themes name isn't defined
+     * @throws \ThemeManager\Exceptions\EmptyThemeName When themes name is empty
      *
      * @return $this
      */
     protected function setName()
     {
         $info = $this->getInfo();
+        if( !is_array( $info ) ) {
+            throw new NoThemeName( $this->getYmlPath() );
+        }
         if( is_array( $info ) && array_key_exists( 'name', $info ) ) {
             if( empty( $info[ 'name' ] ) ) {
                 throw new EmptyThemeName( $this->getYmlPath() );
             }
             $this->name = $info[ 'name' ];
         }
-        else {
-            throw new NoThemeName( $this->getYmlPath() );
-        }
 
         return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    protected function getAutoloadPath()
+    {
+        return $this->autoload;
     }
 
     /**
@@ -117,20 +125,12 @@ class Theme
     }
 
     /**
-     * @return null|string
-     */
-    public function getAutoloadPath()
-    {
-        return $this->autoload;
-    }
-
-    /**
      * @return $this
      */
     public function registerAutoload()
     {
         if( !is_null( $this->getAutoloadPath() ) ) {
-            include_once "{$this->getAutoloadPath()}";
+            require_once "{$this->getAutoloadPath()}";
         }
 
         return $this;
@@ -153,21 +153,24 @@ class Theme
     }
 
     /**
+     * @param $key
+     *
+     * @return bool|mixed
+     */
+    public function getInfoByKey( $key )
+    {
+        if( array_has( $this->getInfo(), $key ) ) {
+            return array_get( $this->getInfo(), $key );
+        }
+        return false;
+    }
+
+    /**
      * @return string
      */
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @return $this
-     */
-    public function setup()
-    {
-        $this->registerAutoload();
-
-        return $this;
     }
 
     /**

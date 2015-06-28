@@ -20,6 +20,8 @@ class ThemeManagerTest extends PHPUnit_Framework_TestCase
     public function testGetAllThemeNames()
     {
         $this->assertTrue( is_array( $this->themeManager->getAllThemeNames() ) );
+
+        $this->assertTrue(  $this->themeManager->all()->count() === 3 );
     }
 
     public function testGetAllThemes()
@@ -44,6 +46,8 @@ class ThemeManagerTest extends PHPUnit_Framework_TestCase
         //Make sure it exists
         $this->assertTrue( $this->themeManager->themeExists( 'example-theme' ) );
         $this->assertInstanceOf( 'ThemeManager\Theme', $this->themeManager->getTheme( 'example-theme' ) );
+        //There should now be four themes
+        $this->assertTrue(  $this->themeManager->all()->count() === 4 );
     }
 
 }

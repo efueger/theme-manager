@@ -1,4 +1,4 @@
-A Simple theme manager that can be used with any php application using PHP 5.5.9 or above. It can also be used with [Laravel 5](http://laravel.com/).
+A simple theme manager that can be used with any php application using PHP 5.5.9 or above. It can also be used with [Laravel 5](http://laravel.com/).
 
 [![Circle CI](https://circleci.com/gh/monkblog/theme-manager.svg?style=svg)](https://circleci.com/gh/monkblog/theme-manager)
 [![Code Climate](https://codeclimate.com/github/monkblog/theme-manager/badges/gpa.svg)](https://codeclimate.com/github/monkblog/theme-manager)
@@ -60,6 +60,12 @@ Go to `config/theme-manager.php` and change the `base_path` to the folder you wa
 return [
     'base_path' => __DIR__ . '/../path/to/themes-folder',
 ];
+```
+
+Bootstrapping theme Service Provider or other important class before application run:
+*Probably best put in `/bootstrap/autoload.php`*
+```php
+\ThemeManager\Starter::bootstrapAutoload();
 ```
 
 If you have a secondary `themes` folder you can add all of the themes to the ThemeManager by using:

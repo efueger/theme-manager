@@ -4,6 +4,7 @@ exclude_paths:
 - "example.php"
 - "helpers.php"
 - "phpunit.php"
+- "src/ThemeManager/conifg/*"
 - "src/ThemeManager/ServiceProvider.php"
 - "src/ThemeManager/Facade/*"
 - "tests/*"

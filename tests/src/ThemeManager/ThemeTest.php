@@ -14,10 +14,16 @@ class ThemeTest extends PHPUnit_Framework_TestCase
         $theme = new Theme( $themePath );
 
         $this->assertArrayHasKey( 'name', $theme->getInfo() );
+
         $this->assertEquals( 'demo-theme-yml', $theme->getName() );
         $this->assertEquals( '.yml', $theme->ymlExtension() );
+
         $this->assertEquals( $themePath, $theme->basePath() );
         $this->assertEquals( $themePath . '/theme.yml', $theme->basePath( 'theme.yml' ) );
+
+        $this->assertEquals( 'demo-theme-yml', $theme->getInfoByKey( 'name' ) );
+
+        $this->assertFalse( $theme->getInfoByKey( 'info' ) );
     }
 
     public function testConstructYamlTrue()
@@ -31,9 +37,7 @@ class ThemeTest extends PHPUnit_Framework_TestCase
     {
         $theme = new Theme( themes_base_path() . '/test-autoload' );
 
-        $this->assertEquals( themes_base_path() . '/test-autoload/vendor/autoload.php', $theme->getAutoloadPath() );
-
-        $theme->setup();
+        $theme->registerAutoload();
 
         $this->assertTrue( class_exists( 'ThemeManager\TestAutoload\TestAutoloadServiceProvider' ) );
     }

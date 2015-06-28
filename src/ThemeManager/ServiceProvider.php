@@ -27,7 +27,7 @@ class ServiceProvider extends ServiceProviderSupport
     public function register()
     {
         $this->app->bind( 'theme.manager', function () {
-            return theme_manager( Config::get( 'theme-manager.base_path', null ) );
+            return new ThemeManager( Starter::start( Config::get( 'theme-manager.base_path', null ) ) );
         } );
     }
 }

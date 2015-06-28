@@ -13,6 +13,13 @@ class StarterTest extends PHPUnit_Framework_TestCase
         putenv( "APP_ENV=testing" );
     }
 
+    public function testBootstrapAutoload()
+    {
+        Starter::bootstrapAutoload();
+
+        $this->assertTrue( class_exists( 'ThemeManager\TestAutoload\TestAutoloadServiceProvider' ) );
+    }
+
     public function testStart()
     {
         $themeCollection = Starter::start();
