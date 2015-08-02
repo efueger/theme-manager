@@ -162,7 +162,18 @@ class Theme
         if( array_has( $this->getInfo(), $key ) ) {
             return array_get( $this->getInfo(), $key );
         }
+
         return false;
+    }
+
+    /**
+     * @param $key
+     *
+     * @return bool|mixed
+     */
+    public function __get( $key )
+    {
+        return $this->getInfoByKey( $key );
     }
 
     /**

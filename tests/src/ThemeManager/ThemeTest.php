@@ -26,6 +26,14 @@ class ThemeTest extends PHPUnit_Framework_TestCase
         $this->assertFalse( $theme->getInfoByKey( 'info' ) );
     }
 
+    public function testMagicGetter() {
+        $themePath = themes_base_path() . '/demo';
+        $theme = new Theme( $themePath );
+
+        $this->assertEquals( 'Demo Theme Yml', $theme->display_name );
+        $this->assertFalse( $theme->false );
+    }
+
     public function testConstructYamlTrue()
     {
         $theme = new Theme( themes_base_path() . '/demo-yaml', true );
