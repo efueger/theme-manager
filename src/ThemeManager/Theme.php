@@ -39,10 +39,30 @@ class Theme
      */
     private $autoload = null;
 
+    /**
+     * @var boolean
+     */
+    private $error = false;
 
     /**
-     * @param      $path
-     * @param bool $yaml
+     * @var string
+     */
+    private $errorType = 'Unknown';
+
+    /**
+     * @var string
+     */
+    protected $fileName = 'theme';
+
+    /**
+     * @var string
+     */
+    protected $autoloadPath = 'vendor';
+
+
+    /**
+     * @param         $path
+     * @param boolean $yaml
      */
     public function __construct( $path, $yaml = false )
     {
@@ -59,7 +79,7 @@ class Theme
      */
     protected function setThemeYmlPath()
     {
-        $this->yml = $this->basePath( 'theme' . $this->ymlExtension() );
+        $this->yml = $this->basePath( $this->fileName . $this->ymlExtension() );
 
         return $this;
     }
@@ -69,8 +89,8 @@ class Theme
      */
     protected function setAutoloadPath()
     {
-        if( file_exists( $this->basePath( 'vendor/autoload.php' ) ) ) {
-            $this->autoload = $this->basePath( 'vendor/autoload.php' );
+        if( file_exists( $this->basePath( rtrim( $this->autoloadPath, '/' ) . '/autoload.php' ) ) ) {
+            $this->autoload = $this->basePath( rtrim( $this->autoloadPath, '/' ) . '/autoload.php' );
         }
 
         return $this;
@@ -96,14 +116,29 @@ class Theme
     {
         $info = $this->getInfo();
         if( !is_array( $info ) ) {
-            throw new NoThemeName( $this->getYmlPath() );
+            $this->setError();
+            throw new NoThemeName( $this->getYmlPath(), $this );
         }
         if( is_array( $info ) && array_key_exists( 'name', $info ) ) {
             if( empty( $info[ 'name' ] ) ) {
-                throw new EmptyThemeName( $this->getYmlPath() );
+                $this->setError( 'Empty Theme Name' );
+                throw new EmptyThemeName( $this->getYmlPath(), $this );
             }
             $this->name = $info[ 'name' ];
         }
+
+        return $this;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return $this
+     */
+    protected function setError( $type = 'No Name' )
+    {
+        $this->error = true;
+        $this->errorType = $type;
 
         return $this;
     }
@@ -114,6 +149,22 @@ class Theme
     protected function getAutoloadPath()
     {
         return $this->autoload;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function hasError()
+    {
+        return $this->error;
+    }
+
+    /**
+     * @return string
+     */
+    public function getErrorType()
+    {
+        return $this->errorType;
     }
 
     /**
@@ -155,7 +206,7 @@ class Theme
     /**
      * @param $key
      *
-     * @return bool|mixed
+     * @return boolean|mixed
      */
     public function getInfoByKey( $key )
     {
@@ -169,7 +220,7 @@ class Theme
     /**
      * @param $key
      *
-     * @return bool|mixed
+     * @return boolean|mixed
      */
     public function __get( $key )
     {

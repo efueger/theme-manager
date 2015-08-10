@@ -41,7 +41,7 @@ class ThemeCollectionTest extends PHPUnit_Framework_TestCase
     public function testGetTheme()
     {
         $this->assertEquals( $this->theme, $this->collection->getTheme( 'demo-theme-yml' ) );
-        $this->assertNull( $this->collection->getTheme( 'demo' ) );
+        $this->assertFalse( $this->collection->getTheme( 'demo' ) );
     }
 
     public function testThemeExists()
