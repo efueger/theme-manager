@@ -88,4 +88,19 @@ class ThemeManagerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(  $this->themeManager->all()->count() === 4 );
     }
 
+    /**
+     * @test
+     * @group manager
+     */
+    public function testAddThemeLocationWithBadData()
+    {
+        $path = themes_base_path() . '/../themes-test';
+
+        $this->themeManager = new ThemeManager( Starter::start( $path ) );
+
+        $this->assertNotEmpty( $this->themeManager->getInvalidThemes() );
+
+        $this->assertTrue(  $this->themeManager->getInvalidThemesCount() === 2 );
+    }
+
 }
