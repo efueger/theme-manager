@@ -59,11 +59,12 @@ class Starter
      * @param Finder      $finder
      * @param boolean     $exceptionOnInvalid
      *
-     * @return ThemeCollection When themes folder does not exist
+     * @return ThemeCollection
      *
      */
     public static function start( $basePath = null, Finder $finder = null, $exceptionOnInvalid = false )
     {
+        self::$themes = [];
         self::setThemeFolder( $basePath );
         self::setFinder( $finder );
         self::$exceptionOnInvalid = $exceptionOnInvalid;
@@ -85,6 +86,8 @@ class Starter
 
     /**
      * @param null|string $basePath
+     *
+     * @throws \ThemeManager\Exceptions\MissingThemesFolder - When themes folder does not exist
      */
     private static function setThemeFolder( $basePath = null )
     {
@@ -109,7 +112,9 @@ class Starter
             /* @var $file SplFileInfo */
             foreach( $files as $file ) {
                 $path = rtrim( $file->getPath(), DIRECTORY_SEPARATOR );
-                self::addTheme( $themes, $path, $tile );
+                if( !empty( $path ) && file_exists( $file ) ) {
+                    self::addTheme( $themes, $path, $file );
+                }
             }
 
             self::$themes = array_merge( self::$themes, $themes );

@@ -24,7 +24,7 @@ class ThemeCollection extends Collection
      */
     public function __construct( $items = [ ] )
     {
-        $this->separateInvalided( $items );
+        $this->separateInvalidItems( $items );
         parent::__construct( $items );
 
         /* @var $theme Theme */
@@ -40,7 +40,7 @@ class ThemeCollection extends Collection
      *
      * @return $this
      */
-    protected function separateInvalided( &$items )
+    protected function separateInvalidItems( &$items )
     {
         foreach( $items as $key => $theme ) {
             if( $theme instanceof Theme && $theme->hasError() ) {
@@ -94,7 +94,7 @@ class ThemeCollection extends Collection
     {
         /* @var $theme Theme */
         foreach( $this->items as $theme ) {
-            if( $theme->getName() == $name ) {
+            if( $theme instanceof Theme && $theme->getName() == $name ) {
                 return $theme;
             }
         }

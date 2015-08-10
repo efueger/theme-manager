@@ -32,24 +32,40 @@ class ThemeCollectionTest extends PHPUnit_Framework_TestCase
         $this->collection = new ThemeCollection( $this->themeArray );
     }
 
+    /**
+     * @test
+     * @group collection
+     */
     public function testConstruct()
     {
         $this->assertTrue( $this->collection->first() instanceof Theme );
         $this->assertFalse( $this->collection->themeExists( 'demo' ) );
     }
 
+    /**
+     * @test
+     * @group collection
+     */
     public function testGetTheme()
     {
         $this->assertEquals( $this->theme, $this->collection->getTheme( 'demo-theme-yml' ) );
         $this->assertFalse( $this->collection->getTheme( 'demo' ) );
     }
 
+    /**
+     * @test
+     * @group collection
+     */
     public function testThemeExists()
     {
         $this->assertTrue( $this->collection->themeExists( 'demo-theme-yml' ) );
         $this->assertFalse( $this->collection->themeExists( 'demo' ) );
     }
 
+    /**
+     * @test
+     * @group collection
+     */
     public function testAllThemNames()
     {
         $allThemeNames = $this->collection->allThemeNames();

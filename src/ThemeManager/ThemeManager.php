@@ -30,7 +30,7 @@ class ThemeManager
     /**
      * @return array
      */
-    public function getAllInvalidThemes()
+    public function getInvalidThemes()
     {
         return $this->themes()->getInvalidThemes();
     }

@@ -172,7 +172,7 @@ class Theme
      */
     public function getYmlPath()
     {
-        return $this->yml ?: '{undefined}';
+        return realpath( $this->yml ) ?: '{path undefined}';
     }
 
     /**
@@ -230,9 +230,17 @@ class Theme
     /**
      * @return string
      */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * @return string
+     */
     public function getName()
     {
-        return $this->name;
+        return $this->name ?: 'Empty or no name found in theme file: ' . $this->getYmlPath();
     }
 
     /**
