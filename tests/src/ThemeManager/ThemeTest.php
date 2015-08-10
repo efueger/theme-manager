@@ -8,6 +8,10 @@ use PHPUnit_Framework_TestCase;
 class ThemeTest extends PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @test
+     * @group theme
+     */
     public function testConstruct()
     {
         $themePath = themes_base_path() . '/demo';
@@ -26,7 +30,12 @@ class ThemeTest extends PHPUnit_Framework_TestCase
         $this->assertFalse( $theme->getInfoByKey( 'info' ) );
     }
 
-    public function testMagicGetter() {
+    /**
+     * @test
+     * @group theme
+     */
+    public function testMagicGetter()
+    {
         $themePath = themes_base_path() . '/demo';
         $theme = new Theme( $themePath );
 
@@ -34,13 +43,20 @@ class ThemeTest extends PHPUnit_Framework_TestCase
         $this->assertFalse( $theme->false );
     }
 
+    /**
+     * @test
+     * @group theme
+     */
     public function testConstructYamlTrue()
     {
         $theme = new Theme( themes_base_path() . '/demo-yaml', true );
 
         $this->assertArrayHasKey( 'name', $theme->getInfo() );
     }
-
+    /**
+     * @test
+     * @group theme
+     */
     public function testThemeAutoload()
     {
         $theme = new Theme( themes_base_path() . '/test-autoload' );
@@ -51,6 +67,9 @@ class ThemeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     * @group theme
+     *
      * @expectedException \ThemeManager\Exceptions\NoThemeName
      */
     public function testConstructFail()
@@ -59,6 +78,9 @@ class ThemeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     * @group theme
+     *
      * @expectedException \ThemeManager\Exceptions\NoThemeName
      */
     public function testThemeUndefinedName()
@@ -67,6 +89,9 @@ class ThemeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     * @group theme
+     *
      * @expectedException \ThemeManager\Exceptions\EmptyThemeName
      */
     public function testThemeEmptyName()

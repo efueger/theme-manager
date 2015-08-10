@@ -10,15 +10,13 @@ class ThemeManager
      */
     private $themes;
 
-    /**
-     * @var array
-     */
-    private $themeNames;
 
+    /**
+     * @param ThemeCollection $themes
+     */
     public function __construct( ThemeCollection $themes )
     {
         $this->themes = $themes;
-        $this->themeNames = $themes->allThemeNames();
     }
 
     /**
@@ -30,9 +28,25 @@ class ThemeManager
     }
 
     /**
+     * @return array
+     */
+    public function getInvalidThemes()
+    {
+        return $this->themes()->getInvalidThemes();
+    }
+
+    /**
+     * @return array
+     */
+    public function getInvalidThemesCount()
+    {
+        return $this->themes()->invalidCount();
+    }
+
+    /**
      * @param $name
      *
-     * @return null|Theme
+     * @return boolean|Theme
      */
     public function getTheme( $name )
     {
@@ -42,7 +56,7 @@ class ThemeManager
     /**
      * @param $name
      *
-     * @return bool
+     * @return boolean
      */
     public function themeExists( $name )
     {

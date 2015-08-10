@@ -13,36 +13,93 @@ class ThemeCollection extends Collection
     private $themeNames = [ ];
 
     /**
+     * @var array
+     */
+    protected $invalidThemes = [];
+
+    /**
      * Create a new theme collection.
      *
-     * @param  mixed $items
+     * @param mixed $items
      */
     public function __construct( $items = [ ] )
     {
-        $this->items = is_array( $items ) ? $items : $this->getArrayableItems( $items );
+        $this->separateInvalidItems( $items );
+        parent::__construct( $items );
+
         /* @var $theme Theme */
         foreach( $this->items as $theme ) {
             if( $theme instanceof Theme ) {
-                $this->themeNames[ ] = $theme->getName();
+                $this->themeNames[] = $theme->getName();
             }
         }
     }
 
     /**
+     * @param $items
+     *
+     * @return $this
+     */
+    protected function separateInvalidItems( &$items )
+    {
+        foreach( $items as $key => $theme ) {
+            if( $theme instanceof Theme && $theme->hasError() ) {
+                $this->invalidThemes[] = $theme;
+                unset( $items[ $key ] );
+            }
+        }
+        array_values( array_filter( $items ) );
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function invalidCount()
+    {
+        return count( $this->invalidThemes );
+    }
+
+    /**
+     * @return array
+     */
+    public function getInvalidThemes()
+    {
+        return $this->invalidThemes;
+    }
+
+    /**
+     * @return int
+     */
+    public function validCount()
+    {
+        return $this->count();
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidThemes()
+    {
+        return $this->all();
+    }
+
+    /**
      * @param $name
      *
-     * @return null|Theme
+     * @return boolean|Theme
      */
     public function getTheme( $name )
     {
         /* @var $theme Theme */
         foreach( $this->items as $theme ) {
-            if( $theme->getName() == $name ) {
+            if( $theme instanceof Theme && $theme->getName() == $name ) {
                 return $theme;
             }
         }
 
-        return null;
+        return false;
     }
 
     /**
@@ -56,7 +113,7 @@ class ThemeCollection extends Collection
     /**
      * @param $name
      *
-     * @return bool
+     * @return boolean
      */
     public function themeExists( $name )
     {

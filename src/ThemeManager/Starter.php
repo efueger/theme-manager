@@ -5,14 +5,20 @@ namespace ThemeManager;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use ThemeManager\Exceptions\MissingThemesFolder;
+use ThemeManager\Exceptions\NoThemeName;
 
 class Starter
 {
 
     /**
-     * @var array
+     * @var boolean
      */
-    private static $themes = [ ];
+    private static $autoload = false;
+
+    /**
+     * @var boolean
+     */
+    private static $exceptionOnInvalid = false;
 
     /**
      * @var Finder
@@ -20,43 +26,48 @@ class Starter
     private static $finder;
 
     /**
-     * @var bool
+     * @var array
      */
-    private static $autoload = false;
+    private static $themes = [ ];
 
     /**
      * @var string
      */
     private static $themesFolder;
 
-    /**
-     * @param null   $basePath
-     * @param Finder $finder
-     */
-    public static function bootstrapAutoload( $basePath = null, Finder $finder = null ) {
-        self::$autoload = true;
-        $collection = self::start( $basePath, $finder );
 
-        $collection->each( function( $theme ) {
-            /* @var $theme Theme */
+    /**
+     * @param  null    $basePath
+     * @param  Finder  $finder
+     * @param  boolean $exceptionOnInvalid
+     */
+    public static function bootstrapAutoload( $basePath = null, Finder $finder = null, $exceptionOnInvalid = false )
+    {
+        self::$autoload = true;
+        $collection = self::start( $basePath, $finder, $exceptionOnInvalid );
+
+        $collection->each( function ( $theme ) {
             if( $theme instanceof Theme ) {
                 $theme->registerAutoload();
             }
-        });
+        } );
     }
 
     /**
      *
-     * @param  string $basePath
-     * @param  Finder $finder
+     * @param string|null $basePath
+     * @param Finder      $finder
+     * @param boolean     $exceptionOnInvalid
      *
-     * @return ThemeCollection When themes folder does not exist
+     * @return ThemeCollection
      *
      */
-    public static function start( $basePath = null, Finder $finder = null )
+    public static function start( $basePath = null, Finder $finder = null, $exceptionOnInvalid = false )
     {
+        self::$themes = [];
         self::setThemeFolder( $basePath );
         self::setFinder( $finder );
+        self::$exceptionOnInvalid = $exceptionOnInvalid;
 
         //Look for theme.yml and theme.yaml
         self::find( 'theme.yml' );
@@ -66,16 +77,20 @@ class Starter
     }
 
     /**
-     * @param null $finder
+     * @param null|\Symfony\Component\Finder\Finder $finder
      */
-    private static function setFinder( $finder = null ) {
+    private static function setFinder( $finder = null )
+    {
         self::$finder = $finder ?: new Finder;
     }
 
     /**
-     * @param null $basePath
+     * @param null|string $basePath
+     *
+     * @throws \ThemeManager\Exceptions\MissingThemesFolder - When themes folder does not exist
      */
-    private static function setThemeFolder( $basePath = null ) {
+    private static function setThemeFolder( $basePath = null )
+    {
         self::$themesFolder = $basePath ?: themes_base_path();
 
         if( !is_dir( self::$themesFolder ) ) {
@@ -97,9 +112,36 @@ class Starter
             /* @var $file SplFileInfo */
             foreach( $files as $file ) {
                 $path = rtrim( $file->getPath(), DIRECTORY_SEPARATOR );
-                $themes[ $path ] = new Theme( $path, ( stristr( $file, '.yaml' ) ) );
+                if( !empty( $path ) && file_exists( $file ) ) {
+                    self::addTheme( $themes, $path, $file );
+                }
             }
+
             self::$themes = array_merge( self::$themes, $themes );
+        }
+    }
+
+    /**
+     * @param $themes
+     * @param $path
+     * @param $file
+     *
+     * @throws \ThemeManager\Exceptions\EmptyThemeName - When themes name is empty
+     * @throws \ThemeManager\Exceptions\NoThemeName When - themes name isn't defined
+     *
+     * @return boolean|Theme
+     */
+    private static function addTheme( &$themes, &$path, &$file )
+    {
+        try {
+            return $themes[ $path ] = new Theme( $path, ( stristr( $file, '.yaml' ) ) );
+        }
+        catch( NoThemeName $error ) {
+            if( self::$exceptionOnInvalid === false && $error->getTheme() ) {
+                return $themes[ $path ] = $error->getTheme();
+            }
+
+            throw $error;
         }
     }
 
