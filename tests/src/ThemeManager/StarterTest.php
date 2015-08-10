@@ -49,7 +49,7 @@ class StarterTest extends PHPUnit_Framework_TestCase
 
         $this->assertNotEmpty( $themeCollection->getInvalidThemes() );
 
-        $this->assertEmpty( $themeCollection->all() );
+        $this->assertEmpty( $themeCollection->getValidThemes() );
 
         $this->assertTrue( $themeCollection->invalidCount() == 2 );
 

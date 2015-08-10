@@ -3,6 +3,7 @@
 namespace ThemeManager;
 
 use PHPUnit_Framework_TestCase;
+use ThemeManager\Exceptions\NoThemeName;
 
 
 class ThemeTest extends PHPUnit_Framework_TestCase
@@ -70,6 +71,38 @@ class ThemeTest extends PHPUnit_Framework_TestCase
      * @test
      * @group theme
      *
+     */
+    public function testThemeUndefinedName()
+    {
+        try {
+            new Theme( themes_base_path() . '/../themes-test/no-name' );
+        }
+        catch( NoThemeName $error ) {
+            $theme = $error->getTheme();
+            $this->assertEquals( 'No Name', $theme->getErrorType() );
+        }
+    }
+
+    /**
+     * @test
+     * @group theme
+     *
+     */
+    public function testThemeEmptyName()
+    {
+        try {
+            new Theme( themes_base_path() . '/../themes-test/empty-name' );
+        }
+        catch( NoThemeName $error ) {
+            $theme = $error->getTheme();
+            $this->assertEquals( 'Empty Theme Name', $theme->getErrorType() );
+        }
+    }
+
+    /**
+     * @test
+     * @group theme
+     *
      * @expectedException \ThemeManager\Exceptions\NoThemeName
      */
     public function testConstructFail()
@@ -83,7 +116,7 @@ class ThemeTest extends PHPUnit_Framework_TestCase
      *
      * @expectedException \ThemeManager\Exceptions\NoThemeName
      */
-    public function testThemeUndefinedName()
+    public function testThrowsThemeUndefinedName()
     {
         new Theme( themes_base_path() . '/../themes-test/no-name' );
     }
@@ -94,7 +127,7 @@ class ThemeTest extends PHPUnit_Framework_TestCase
      *
      * @expectedException \ThemeManager\Exceptions\EmptyThemeName
      */
-    public function testThemeEmptyName()
+    public function testThrowsThemeEmptyName()
     {
         new Theme( themes_base_path() . '/../themes-test/empty-name' );
     }
