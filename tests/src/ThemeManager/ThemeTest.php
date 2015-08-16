@@ -3,7 +3,7 @@
 namespace ThemeManager;
 
 use PHPUnit_Framework_TestCase;
-use ThemeManager\Exceptions\NoThemeName;
+use ThemeManager\Exceptions\NoThemeData;
 
 
 class ThemeTest extends PHPUnit_Framework_TestCase
@@ -50,10 +50,11 @@ class ThemeTest extends PHPUnit_Framework_TestCase
      */
     public function testConstructYamlTrue()
     {
-        $theme = new Theme( themes_base_path() . '/demo-yaml', true );
+        $theme = new Theme( themes_base_path() . '/demo-yaml', [], true );
 
         $this->assertArrayHasKey( 'name', $theme->getInfo() );
     }
+
     /**
      * @test
      * @group theme
@@ -72,12 +73,30 @@ class ThemeTest extends PHPUnit_Framework_TestCase
      * @group theme
      *
      */
+    public function testThemeRequiredFields()
+    {
+        $requiredFields = [ 'version', 'type', 'assets' ];
+        try {
+            new Theme( themes_base_path() . '/demo', $requiredFields );
+        }
+        catch( NoThemeData $error ) {
+            $theme = $error->getTheme();
+            $this->assertEquals( 'Missing Required Field(s)', $theme->getErrorType() );
+            $this->assertEquals( $requiredFields, $theme->getMissingRequiredFields() );
+        }
+    }
+
+    /**
+     * @test
+     * @group theme
+     *
+     */
     public function testThemeUndefinedName()
     {
         try {
             new Theme( themes_base_path() . '/../themes-test/no-name' );
         }
-        catch( NoThemeName $error ) {
+        catch( NoThemeData $error ) {
             $theme = $error->getTheme();
             $this->assertEquals( 'No Name', $theme->getErrorType() );
         }
@@ -93,7 +112,7 @@ class ThemeTest extends PHPUnit_Framework_TestCase
         try {
             new Theme( themes_base_path() . '/../themes-test/empty-name' );
         }
-        catch( NoThemeName $error ) {
+        catch( NoThemeData $error ) {
             $theme = $error->getTheme();
             $this->assertEquals( 'Empty Theme Name', $theme->getErrorType() );
         }
@@ -103,11 +122,11 @@ class ThemeTest extends PHPUnit_Framework_TestCase
      * @test
      * @group theme
      *
-     * @expectedException \ThemeManager\Exceptions\NoThemeName
+     * @expectedException \ThemeManager\Exceptions\NoThemeData
      */
     public function testConstructFail()
     {
-        new Theme( themes_base_path() . '/demo', true );
+        new Theme( themes_base_path() . '/demo', [], true );
     }
 
     /**

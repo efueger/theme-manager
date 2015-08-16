@@ -80,13 +80,15 @@ class ThemeManager
     }
 
     /**
-     * @param $path
+     * @param       $path
+     * @param array $requiredFields
+     * @param bool  $exceptionOnInvalid
      *
      * @return $this
      */
-    public function addThemeLocation( $path )
+    public function addThemeLocation( $path, Array $requiredFields = [], $exceptionOnInvalid = false  )
     {
-        $this->themes = $this->themes()->merge( Starter::start( $path )->all() );
+        $this->themes = $this->themes()->merge( (new Starter)->start( $path, $requiredFields, $exceptionOnInvalid )->all() );
 
         return $this;
     }

@@ -4,6 +4,8 @@ namespace ThemeManager;
 
 use Symfony\Component\Yaml\Yaml;
 use ThemeManager\Exceptions\EmptyThemeName;
+use ThemeManager\Exceptions\MissingRequiredFields;
+use ThemeManager\Exceptions\NoThemeData;
 use ThemeManager\Exceptions\NoThemeName;
 
 class Theme
@@ -59,19 +61,33 @@ class Theme
      */
     protected $autoloadPath = 'vendor';
 
+    /**
+     * @var array
+     */
+    protected $requiredFields;
+
+    /**
+     * @var array
+     */
+    protected $missingRequiredFields = [];
+
 
     /**
      * @param         $path
+     * @param array   $requiredFields
      * @param boolean $yaml
      */
-    public function __construct( $path, $yaml = false )
+    public function __construct( $path, Array $requiredFields = [], $yaml = false )
     {
         $this->basePath = $path;
+        $this->requiredFields = $requiredFields;
         $this->ymlFileExtension = $yaml ? '.yaml' : '.yml';
+
         $this->setThemeYmlPath()
             ->setAutoloadPath()
             ->setInfo()
-            ->setName();
+            ->setName()
+            ->checkRequiredFields();
     }
 
     /**
@@ -107,6 +123,7 @@ class Theme
     }
 
     /**
+     * @throws \ThemeManager\Exceptions\NoThemeData When theme.yml is empty
      * @throws \ThemeManager\Exceptions\NoThemeName When themes name isn't defined
      * @throws \ThemeManager\Exceptions\EmptyThemeName When themes name is empty
      *
@@ -115,19 +132,61 @@ class Theme
     protected function setName()
     {
         $info = $this->getInfo();
+
         if( !is_array( $info ) ) {
+            $this->setError('No Theme Data');
+            throw new NoThemeData( $this->getYmlPath(), $this );
+        }
+        else if( !array_key_exists( 'name', $info ) ) {
             $this->setError();
             throw new NoThemeName( $this->getYmlPath(), $this );
         }
-        if( is_array( $info ) && array_key_exists( 'name', $info ) ) {
-            if( empty( $info[ 'name' ] ) ) {
-                $this->setError( 'Empty Theme Name' );
-                throw new EmptyThemeName( $this->getYmlPath(), $this );
+        else if( empty( $info[ 'name' ] ) ) {
+            $this->setError( 'Empty Theme Name' );
+            throw new EmptyThemeName( $this->getYmlPath(), $this );
+        }
+        $this->name = $info[ 'name' ];
+
+        return $this;
+    }
+
+    /**
+     * @throws \ThemeManager\Exceptions\MissingRequiredFields When required field is empty
+     *
+     * @return $this
+     */
+    protected function checkRequiredFields()
+    {
+        if( !empty( $this->requiredFields ) ) {
+            foreach( $this->requiredFields as $field ) {
+                if( is_string( $field ) && ( $this->getInfoByKey( $field ) === false ||
+                    empty( $this->getInfoByKey( $field ) ) ) )
+                {
+                    $this->missingRequiredFields[] = $field;
+                }
             }
-            $this->name = $info[ 'name' ];
+
+            if( !empty( $this->missingRequiredFields ) ) {
+                $this->setError( 'Missing Required Field(s)' );
+                throw new MissingRequiredFields( $this->getYmlPath(), $this );
+            }
         }
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+        public function getMissingRequiredFields() {
+        return $this->missingRequiredFields;
+    }
+
+    /**
+     * @return int
+     */
+    public function countMissingRequiredFields() {
+        return count( $this->missingRequiredFields );
     }
 
     /**

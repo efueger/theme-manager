@@ -1,7 +1,7 @@
 {
     "name": "monkblog/theme-manager",
     "description": "A simple theme manager",
-    "keywords": ["monk", "monkblog", "theme", "theme manager", "laravel", "manager"],
+    "keywords": ["laravel", "monk", "monkblog", "theme", "themes", "theme manager", "simple", "simple theme manager", "manager"],
     "license": "MIT",
     "authors": [
       {
