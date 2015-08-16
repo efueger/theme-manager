@@ -36,17 +36,21 @@ class Starter
      */
     private $themesFolder;
 
+    public function __construct( Finder $finder = null )
+    {
+        $this->finder = $finder ?: new Finder;
+    }
+
 
     /**
      * @param null    $basePath
-     * @param Finder  $finder
      * @param array    $requiredFields
      * @param boolean $exceptionOnInvalid
      */
-    public function bootstrapAutoload( $basePath = null, Finder $finder = null, Array $requiredFields = [], $exceptionOnInvalid = false )
+    public function bootstrapAutoload( $basePath = null, Array $requiredFields = [], $exceptionOnInvalid = false )
     {
         $this->autoload = true;
-        $collection = $this->start( $basePath, $finder, $requiredFields, $exceptionOnInvalid );
+        $collection = $this->start( $basePath, $requiredFields, $exceptionOnInvalid );
 
         $collection->each( function ( $theme ) {
             if( $theme instanceof Theme ) {
@@ -58,16 +62,14 @@ class Starter
     /**
      *
      * @param string|null $basePath
-     * @param Finder      $finder
      * @param array       $requiredFields
      * @param boolean     $exceptionOnInvalid
      *
      * @return ThemeCollection
      */
-    public function start( $basePath = null, Finder $finder = null, Array $requiredFields = [], $exceptionOnInvalid = false )
+    public function start( $basePath = null, Array $requiredFields = [], $exceptionOnInvalid = false )
     {
         $this->setThemeFolder( $basePath );
-        $this->finder = $finder ?: new Finder;
         $this->exceptionOnInvalid = $exceptionOnInvalid;
 
         //Look for theme.yml and theme.yaml

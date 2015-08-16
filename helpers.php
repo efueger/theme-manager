@@ -43,6 +43,6 @@ if( !function_exists( 'theme_manager' ) ) {
      */
     function theme_manager( $basePath = null, Array $requiredFields = [], $exceptionOnInvalid = false )
     {
-        return new \ThemeManager\ThemeManager( theme_manager_starter()->start( $basePath, null, $requiredFields, $exceptionOnInvalid ) );
+        return new \ThemeManager\ThemeManager( theme_manager_starter()->start( $basePath, $requiredFields, $exceptionOnInvalid ) );
     }
 }

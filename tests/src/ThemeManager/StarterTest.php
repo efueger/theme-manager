@@ -64,7 +64,7 @@ class StarterTest extends PHPUnit_Framework_TestCase
      */
     public function testStartExceptionHandler()
     {
-        (new Starter)->start( null, null, [], true );
+        (new Starter)->start( null, [], true );
     }
 
     /**
@@ -77,7 +77,7 @@ class StarterTest extends PHPUnit_Framework_TestCase
     {
         $path = themes_base_path() . '/../themes-test';
 
-        (new Starter)->start( $path, null, [], true );
+        (new Starter)->start( $path, [], true );
     }
 
     /**

@@ -114,10 +114,10 @@ ThemeManager::addThemeLocation( __DIR__ . '/path/to/alternative/themes-folder' )
 
 ```php
 //Via new
-$themeManager = new \ThemeManager\ThemeManager( \ThemeManager\Starter::start() );
+$themeManager = new \ThemeManager\ThemeManager( (new \ThemeManager\Starter)->start() );
 
 //Optionally pass in initial base path
-$themeManager = new \ThemeManager\ThemeManager( \ThemeManager\Starter::start( __DIR__ . '/path/to/themes/' ) );
+$themeManager = new \ThemeManager\ThemeManager( (new \ThemeManager\Starter)->start( __DIR__ . '/path/to/themes/' ) );
 
 //Via Helper
 $themeManager = theme_manager();

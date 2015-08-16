@@ -88,7 +88,7 @@ class ThemeManager
      */
     public function addThemeLocation( $path, Array $requiredFields = [], $exceptionOnInvalid = false  )
     {
-        $this->themes = $this->themes()->merge( (new Starter)->start( $path, null, $requiredFields, $exceptionOnInvalid )->all() );
+        $this->themes = $this->themes()->merge( (new Starter)->start( $path, $requiredFields, $exceptionOnInvalid )->all() );
 
         return $this;
     }
