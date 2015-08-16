@@ -1,4 +1,4 @@
-A simple theme manager that can be used with any php application using PHP 5.5.9 or above. It can also be used with [Laravel 5](http://laravel.com/).
+A simple theme manager that can be used with [Laravel 5](http://laravel.com/).
 
 [![Circle CI](https://circleci.com/gh/monkblog/theme-manager.svg?style=svg)](https://circleci.com/gh/monkblog/theme-manager)
 [![Code Climate](https://codeclimate.com/github/monkblog/theme-manager/badges/gpa.svg)](https://codeclimate.com/github/monkblog/theme-manager)
@@ -44,7 +44,7 @@ name: my-theme
 # Bootstrapping Theme Classes
 Bootstrapping theme Service Provider(s) or other important classes before the application run:
 
-*For Laravel users: this code snippet is probably best placed in `bootstrap/autoload.php`*
+*For Laravel users: this code snippet is probably best placed at the bottom of `bootstrap/autoload.php` (after `require $compiledPath;`)*
 
 ```php
 \ThemeManager\Starter::bootstrapAutoload();
@@ -54,6 +54,9 @@ You can also optionally pass in a path to your themes folder if it's different t
 ```php
 \ThemeManager\Starter::bootstrapAutoload( '/path/to/theme-folder' );
 ```
+
+# Error Handling
+This package requires that a `theme` file have at least a `name` field defined. As of version 1.1 it will handle and separate the invalid themes from the valid ones.
 
 # Using with Laravel
 
