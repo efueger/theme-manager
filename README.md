@@ -10,7 +10,7 @@ A simple theme manager that can be used with [Laravel 5](http://laravel.com/).
 
 # Requirements
 
-ThemeManger 1.0.*
+ThemeManger 1.1.*
  - Use with Laravel requires version 5 or above.
  - PHP 5.5.9 or greater
  
@@ -19,7 +19,7 @@ ThemeManger 1.0.*
 Require this package with Composer
 
 ```
-composer require monkblog/theme-manager 1.0.x
+composer require monkblog/theme-manager 1.1.x
 ```
 
 #### Note:
