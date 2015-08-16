@@ -85,7 +85,7 @@ class ThemeManagerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( $this->themeManager->themeExists( 'example-theme' ) );
         $this->assertInstanceOf( 'ThemeManager\\Theme', $this->themeManager->getTheme( 'example-theme' ) );
         //There should now be four themes
-        $this->assertTrue(  $this->themeManager->all()->count() === 4 );
+        $this->assertEquals( 4,  $this->themeManager->all()->count() );
     }
 
     /**
@@ -94,13 +94,15 @@ class ThemeManagerTest extends PHPUnit_Framework_TestCase
      */
     public function testAddThemeLocationWithBadData()
     {
-        $path = themes_base_path() . '/../themes-test';
+        $this->assertEquals( 1,  $this->themeManager->getInvalidThemesCount() );
 
-        $this->themeManager = new ThemeManager( (new Starter)->start( $path ) );
+        $addPath = themes_base_path() . '/../themes-test';
+
+        $this->themeManager->addThemeLocation( $addPath );
 
         $this->assertNotEmpty( $this->themeManager->getInvalidThemes() );
 
-        $this->assertTrue(  $this->themeManager->getInvalidThemesCount() === 2 );
+        $this->assertEquals( 3,  $this->themeManager->getInvalidThemesCount() );
     }
 
 }

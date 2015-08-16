@@ -40,7 +40,7 @@ class ThemeCollection extends Collection
      *
      * @return $this
      */
-    protected function separateInvalidItems( &$items )
+    public function separateInvalidItems( &$items )
     {
         foreach( $items as $key => $theme ) {
             if( $theme instanceof Theme && $theme->hasError() ) {
