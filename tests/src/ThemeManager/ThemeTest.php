@@ -103,7 +103,7 @@ class ThemeTest extends PHPUnit_Framework_TestCase
      * @test
      * @group theme
      *
-     * @expectedException \ThemeManager\Exceptions\NoThemeName
+     * @expectedException \ThemeManager\Exceptions\NoThemeData
      */
     public function testConstructFail()
     {
