@@ -160,4 +160,4 @@ $themeManager->addThemeLocation( __DIR__ . '/path/to/alternative/themes-folder' 
 
 ### License
 
-This package is open-sourced software licensed under the MIT license.
+This package is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).

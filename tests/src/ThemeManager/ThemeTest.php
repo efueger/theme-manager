@@ -50,7 +50,7 @@ class ThemeTest extends PHPUnit_Framework_TestCase
      */
     public function testConstructYamlTrue()
     {
-        $theme = new Theme( themes_base_path() . '/demo-yaml', true );
+        $theme = new Theme( themes_base_path() . '/demo-yaml', [], true );
 
         $this->assertArrayHasKey( 'name', $theme->getInfo() );
     }
@@ -107,7 +107,7 @@ class ThemeTest extends PHPUnit_Framework_TestCase
      */
     public function testConstructFail()
     {
-        new Theme( themes_base_path() . '/demo', true );
+        new Theme( themes_base_path() . '/demo', [], true );
     }
 
     /**

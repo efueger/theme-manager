@@ -16,7 +16,7 @@ class ThemeManagerTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->themeManager = new ThemeManager( Starter::start() );
+        $this->themeManager = new ThemeManager( (new Starter)->start() );
     }
 
     /**
@@ -96,7 +96,7 @@ class ThemeManagerTest extends PHPUnit_Framework_TestCase
     {
         $path = themes_base_path() . '/../themes-test';
 
-        $this->themeManager = new ThemeManager( Starter::start( $path ) );
+        $this->themeManager = new ThemeManager( (new Starter)->start( $path ) );
 
         $this->assertNotEmpty( $this->themeManager->getInvalidThemes() );
 

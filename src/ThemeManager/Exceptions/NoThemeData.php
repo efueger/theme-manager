@@ -3,9 +3,10 @@
 namespace ThemeManager\Exceptions;
 
 use Exception;
+use OutOfBoundsException;
 use ThemeManager\Theme;
 
-class NoThemeName extends NoThemeData
+class NoThemeData extends OutOfBoundsException
 {
     /**
      * @var boolean|Theme
@@ -22,7 +23,21 @@ class NoThemeName extends NoThemeData
      */
     public function __construct( $themePath, Theme $theme = null, $subMessage = false, $code = 0, Exception $previous = null )
     {
-        parent::__construct( $themePath, $theme, ( $subMessage ?: "doesn't define 'name'" ), $code, $previous );
+        $message = "Theme {$themePath} " . ( $subMessage ?: "doesn't have any theme meta data defined." );
+
+        if( !is_null( $theme ) ) {
+            $this->theme = $theme;
+        }
+
+        parent::__construct( $message, $code, $previous );
+    }
+
+    /**
+     * @return boolean|Theme
+     */
+    public function getTheme()
+    {
+        return $this->theme;
     }
 
 }
