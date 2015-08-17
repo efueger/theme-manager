@@ -80,6 +80,30 @@ class ThemeManager
     }
 
     /**
+     * @return \ThemeManager\Theme
+     */
+    public function first()
+    {
+        return $this->all()->first();
+    }
+
+    /**
+     * @return \ThemeManager\Theme
+     */
+    public function last()
+    {
+        return $this->all()->last();
+    }
+
+    /**
+     * @return int
+     */
+    public function countAll()
+    {
+        return $this->all()->count();
+    }
+
+    /**
      * @param       $path
      * @param array $requiredFields
      * @param bool  $exceptionOnInvalid

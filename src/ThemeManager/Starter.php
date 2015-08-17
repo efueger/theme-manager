@@ -28,7 +28,7 @@ class Starter
     /**
      * @var bool
      */
-    private $secondaryThemes = false;
+    private $isSecondaryLocation = false;
 
     /**
      * @var array
@@ -42,12 +42,12 @@ class Starter
 
 
     /**
-     * @param bool|false  $secondaryThemes
+     * @param bool|false  $isSecondaryLocation
      * @param Finder|null $finder
      */
-    public function __construct( $secondaryThemes = false, Finder $finder = null )
+    public function __construct( $isSecondaryLocation = false, Finder $finder = null )
     {
-        $this->secondaryThemes = $secondaryThemes;
+        $this->isSecondaryLocation = $isSecondaryLocation;
         $this->finder = $finder ?: new Finder;
     }
 
@@ -142,7 +142,7 @@ class Starter
     {
         try {
             $isYaml = ( stristr( $file, '.yaml' ) );
-            return $themes[ $path ] = new Theme( $path, $requiredFields, $isYaml, $this->secondaryThemes );
+            return $themes[ $path ] = new Theme( $path, $requiredFields, $isYaml, $this->isSecondaryLocation );
         }
         catch( NoThemeData $error ) {
             if( $this->exceptionOnInvalid === false && $error->getTheme() ) {

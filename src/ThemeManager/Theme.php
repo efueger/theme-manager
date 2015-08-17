@@ -64,7 +64,7 @@ class Theme
     /**
      * @var string
      */
-    private $type;
+    private $locationType;
 
     /**
      * @var string
@@ -81,12 +81,12 @@ class Theme
      * @param         $path
      * @param array   $requiredFields
      * @param boolean $yaml
-     * @param bool    $secondary
+     * @param bool    $isSecondary
      */
-    public function __construct( $path, Array $requiredFields = [], $yaml = false, $secondary = false )
+    public function __construct( $path, Array $requiredFields = [], $yaml = false, $isSecondary = false )
     {
         $this->basePath = $path;
-        $this->type = ( $secondary ) ? 'Secondary' : 'Primary';
+        $this->locationType = ( $isSecondary ) ? 'Secondary' : 'Primary';
         $this->requiredFields = $requiredFields;
         $this->ymlFileExtension = $yaml ? '.yaml' : '.yml';
 
@@ -167,7 +167,7 @@ class Theme
         if( !empty( $this->requiredFields ) ) {
             foreach( $this->requiredFields as $field ) {
                 if( is_string( $field ) && ( $this->getInfoByKey( $field ) === false ||
-                    empty( $this->getInfoByKey( $field ) ) ) )
+                    !isset( $this->info[ $field ] ) ) )
                 {
                     $this->missingRequiredFields[] = $field;
                 }
@@ -244,8 +244,8 @@ class Theme
     /**
      * @return string
      */
-    public function getType() {
-        return $this->type;
+    public function getLocationType() {
+        return $this->locationType;
     }
 
     /**

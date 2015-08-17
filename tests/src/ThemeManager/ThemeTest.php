@@ -73,7 +73,23 @@ class ThemeTest extends PHPUnit_Framework_TestCase
      * @group theme
      *
      */
-    public function testThemeRequiredFields()
+    public function testThemeRequiredFieldsPass()
+    {
+        $requiredFields = [ 'display_name', 'version', 'license' ];
+
+        $validTheme = new Theme( themes_base_path() . '/../themes-required-fields/demo', $requiredFields );
+
+        $this->assertEquals( 'MIT', $validTheme->license );
+
+        $this->assertEquals( '0.0', $validTheme->version );
+    }
+
+    /**
+     * @test
+     * @group theme
+     *
+     */
+    public function testThemeRequiredFieldsFail()
     {
         $requiredFields = [ 'version', 'type', 'assets' ];
         try {

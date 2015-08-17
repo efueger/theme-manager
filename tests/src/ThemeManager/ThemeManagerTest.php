@@ -34,7 +34,7 @@ class ThemeManagerTest extends PHPUnit_Framework_TestCase
      */
     public function testGetAllThemeNamesCountThree()
     {
-        $this->assertEquals( 3,  $this->themeManager->all()->count() );
+        $this->assertEquals( 3,  $this->themeManager->countAll() );
     }
 
     /**
@@ -77,10 +77,18 @@ class ThemeManagerTest extends PHPUnit_Framework_TestCase
      * @test
      * @group manager
      */
+    public function testGetLocationTypePrimary()
+    {
+        $this->assertEquals( 'Primary', $this->themeManager->first()->getLocationType() );
+        $this->assertEquals( 'Primary', $this->themeManager->last()->getLocationType() );
+    }
+
+    /**
+     * @test
+     * @group manager
+     */
     public function testAddThemeLocation()
     {
-        //Before this all themes are Primary
-        $this->assertEquals( 'Primary', $this->themeManager->all()->first()->getType() );
         //Path that has one theme
         $path = themes_base_path() . '/../themes-alternative';
         //returns $this
@@ -89,9 +97,9 @@ class ThemeManagerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( $this->themeManager->themeExists( 'example-theme' ) );
         $this->assertInstanceOf( 'ThemeManager\\Theme', $this->themeManager->getTheme( 'example-theme' ) );
         //example-theme is a Secondary Theme
-        $this->assertEquals( 'Secondary', $this->themeManager->getTheme( 'example-theme' )->getType() );
+        $this->assertEquals( 'Secondary', $this->themeManager->getTheme( 'example-theme' )->getLocationType() );
         //There should now be four themes
-        $this->assertEquals( 4,  $this->themeManager->all()->count() );
+        $this->assertEquals( 4,  $this->themeManager->countAll() );
     }
 
     /**
