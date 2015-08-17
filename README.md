@@ -44,7 +44,7 @@ As of version 1.1 you can define a list of required fields that need to be defin
 This package will handle and separate the invalid themes from the valid ones.
 
 Go to `config/theme-manager.php` and change the `required_fields` to the array of required field to be enforced.
-(see **Publish Config** below if config is not in your config folder).
+(see [Publish Config](https://github.com/monkblog/theme-manager#publish-config) below if config is not in your config folder).
 
 ## Error Handling
 As of version 1.1 there's a `boolean $exceptionOnInvalid` which by default is `false`. To have the package throw exceptions
@@ -145,7 +145,7 @@ $themeName = $theme->getName();
 ```
 
 #### Override the base themes path:
-(See **Publish Config** section above if `theme-manager.php` isn't present)
+(See [Publish Config](https://github.com/monkblog/theme-manager#publish-config) section above if `theme-manager.php` isn't present)
 
 Go to `config/theme-manager.php` and change the `base_path` to the folder you want to use.
 ```php
