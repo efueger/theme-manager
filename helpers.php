@@ -1,11 +1,8 @@
 <?php
 
-
-
-
 if( !function_exists( 'themes_base_path' ) ) {
     /**
-     * @return string|bool
+     * @return string|boolean
      */
     function themes_base_path()
     {
@@ -34,10 +31,10 @@ if( ! function_exists( 'theme_manager_starter' ) ) {
 
 if( !function_exists( 'theme_manager' ) ) {
     /**
-     * @param null  $basePath
+     * @param null    $basePath
      *
-     * @param array $requiredFields
-     * @param bool  $exceptionOnInvalid
+     * @param array   $requiredFields
+     * @param boolean $exceptionOnInvalid
      *
      * @return \ThemeManager\ThemeManager
      */

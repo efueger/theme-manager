@@ -81,7 +81,7 @@ class Theme
      * @param         $path
      * @param array   $requiredFields
      * @param boolean $yaml
-     * @param bool    $isSecondary
+     * @param boolean $isSecondary
      */
     public function __construct( $path, Array $requiredFields = [], $yaml = false, $isSecondary = false )
     {

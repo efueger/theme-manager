@@ -5,6 +5,9 @@ require_once 'vendor/autoload.php';
 $basePath = null;
 $requiredFields = [ 'display_name', 'version', 'license', ];
 
+/**
+ * Via new Class
+ */
 //Bootstrapping theme php files if autoload.php file is present
 ( new \ThemeManager\Starter )->bootstrapAutoload();
 //OR via helper
@@ -21,10 +24,13 @@ $themeManager = new \ThemeManager\ThemeManager( ( new \ThemeManager\Starter )->s
 
 //Via Theme Manager Starter Helper
 $themeManager = new \ThemeManager\ThemeManager( theme_manager_starter()->start() );
-//OR
-$themeManager = new \ThemeManager\ThemeManager( theme_manager_starter()->start( $basePath, $requiredFields ) );
 
-//Via Helper
+// Exception On Invalid
+$themeManager = new \ThemeManager\ThemeManager( theme_manager_starter()->start( $basePath, $requiredFields, true ) );
+
+/**
+ * Via Helper
+ */
 $themeManager = theme_manager();
 
 //Optionally pass in initial base path
@@ -32,6 +38,9 @@ $themeManager = theme_manager( __DIR__ . '/path/to/themes/' );
 
 //Optional Required Field(s)
 $themeManager = theme_manager( $basePath, $requiredFields );
+
+// Exception On Invalid
+$themeManager = theme_manager( $basePath, $requiredFields, true );
 
 //ThemeCollection
 $allThemes = $themeManager->all();

@@ -15,7 +15,7 @@ class NoThemeName extends NoThemeData
 
     /**
      * @param string         $themePath
-     * @param bool           $subMessage
+     * @param boolean        $subMessage
      * @param Theme|null     $theme
      * @param int            $code
      * @param Exception|null $previous

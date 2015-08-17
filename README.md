@@ -9,8 +9,6 @@ A simple theme manager that can be used with [Laravel 5](http://laravel.com/).
 [![License](https://poser.pugx.org/monkblog/theme-manager/license.svg)](https://packagist.org/packages/monkblog/theme-manager)
 
 # Requirements
-
-ThemeManger 1.1.*
  - Use with Laravel requires version 5 or above.
  - PHP 5.5.9 or greater
  
@@ -19,25 +17,33 @@ ThemeManger 1.1.*
 Require this package with Composer
 
 ```
-composer require monkblog/theme-manager 1.1.x
+composer require monkblog/theme-manager 1.1.*
 ```
 
 #### Note:
 This package assumes that you have a `themes` folder at the root of your project containing all your theme folders. 
-*The base_path can be overwritten via config or the `start( __DIR__ . '/folder/' )` method on the `\ThemeManager\Starter` class* 
 
-Each theme folder will need a `theme.yml` or `theme.yaml` file with at least a `name` entry defined.
+*The 'base path' can be overwritten via `config/theme-manager.php` or the `start( __DIR__ . '/folder/' )` method on the `\ThemeManager\Starter` class* 
+
 e.g.
 ```yaml
-#themes/my-theme/theme.yml
+# themes/my-theme/theme.yml
 name: my-theme
 ```
 
 # Requiring Theme Meta Data Field(s)
-As of version 1.1 you can define a list of required fields that need to be defined in the `theme.yml` file of each theme.
+This package requires that a `theme.yml`/`theme.yaml` file have at least a `name` field defined.
+
+As of version 1.1 you can define a list of required fields that need to be defined in each `theme.yml` file. 
+This package will handle and separate the invalid themes from the valid ones.
+
+Go to `config/theme-manager.php` and change the `required_fields` to the array of required field to be enforced.
+(see **Publish Config** below if config is not in your config folder).
 
 # Error Handling
-This package requires that a `theme` file have at least a `name` field defined. As of version 1.1 it will handle and separate the invalid themes from the valid ones.
+As of version 1.1 there's a `boolean $exceptionOnInvalid` which by default is `false`. To have the package throw exceptions
+for invalid themes change `exception_on_invalid` in `config/theme-manager.php` to be `true` or pass `true` as the `$exceptionOnInvalid` 
+argument on the `start` method of `\ThemeManager\Starter` class.
 
 # Folder Structure Example
 - app/
@@ -75,11 +81,6 @@ You can also optionally pass in a path to your themes folder if it's different t
 ```php
 ( new \ThemeManager\Starter )->bootstrapAutoload( '/path/to/theme-folder' );
 ```
-
-
-#### Laravel Config
-Go to `config/theme-manager.php` and change the `required_fields` to the array of required field to be enforced.
-(see **Publish Config** below if config is not in your config folder).
 
 #### Injecting into Starter Class
 If you're not using the Laravel Service Provider, you can pass an array to the  `\ThemeManager\Starter` `start()` method:

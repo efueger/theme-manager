@@ -104,9 +104,9 @@ class ThemeManager
     }
 
     /**
-     * @param       $path
-     * @param array $requiredFields
-     * @param bool  $exceptionOnInvalid
+     * @param         $path
+     * @param array   $requiredFields
+     * @param boolean $exceptionOnInvalid
      *
      * @return $this
      */

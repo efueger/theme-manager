@@ -30,8 +30,9 @@ class ServiceProvider extends ServiceProviderSupport
         {
             $basePath = Config::get( 'theme-manager.base_path', null );
             $requiredFields = Config::get( 'theme-manager.required_fields', [] );
+            $exceptionOnInvalid = Config::get( 'theme-manager.exception_on_invalid', false );
 
-            return new ThemeManager( (new Starter)->start( $basePath, $requiredFields ) );
+            return new ThemeManager( ( new Starter )->start( $basePath, $requiredFields, $exceptionOnInvalid ) );
         } );
     }
 }

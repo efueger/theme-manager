@@ -26,7 +26,7 @@ class Starter
     private $finder;
 
     /**
-     * @var bool
+     * @var boolean
      */
     private $isSecondaryLocation = false;
 
@@ -42,7 +42,7 @@ class Starter
 
 
     /**
-     * @param bool|false  $isSecondaryLocation
+     * @param boolean|false  $isSecondaryLocation
      * @param Finder|null $finder
      */
     public function __construct( $isSecondaryLocation = false, Finder $finder = null )
