@@ -23,40 +23,81 @@ composer require monkblog/theme-manager 1.1.x
 ```
 
 #### Note:
-This package assumes that you have a `themes` folder (this can be overwritten via `Starter::start(__DIR__.'/path')`, read more below) at the root of your project containing all your theme folders. 
-Each theme will need a `theme.yml` or `theme.yaml` with at least a `name` entry defined in the folder.
+This package assumes that you have a `themes` folder at the root of your project containing all your theme folders. 
+*The base_path can be overwritten via config or the `start( __DIR__ . '/folder/' )` method on the `\ThemeManager\Starter` class* 
 
-(e.g. `themes/my-theme/theme.yml`)
+Each theme folder will need a `theme.yml` or `theme.yaml` file with at least a `name` entry defined.
+e.g.
 ```yaml
+#themes/my-theme/theme.yml
 name: my-theme
 ```
 
-##### Structure Example
+# Requiring Theme Meta Data Field(s)
+As of version 1.1 you can define a list of required fields that need to be defined in the `theme.yml` file of each theme.
+
+# Error Handling
+This package requires that a `theme` file have at least a `name` field defined. As of version 1.1 it will handle and separate the invalid themes from the valid ones.
+
+# Folder Structure Example
 - app/
 - public/
 - themes/
-  - my-theme
+  - my-theme/
     - theme.yml
-  - my-other-theme
+  - my-theme-with-autoload/
+    - composer.json
+    - helpers.php
+    - src/
+      - MyThemeNamespace/
+        - MyClass.php
+        - MyThemeServiceProvider.php
+    - theme.yml
+    - vendor/
+  - my-other-theme/
     - theme.yml
 - vendor/
 
+# Examples
+
+[example.php](https://github.com/monkblog/theme-manager/blob/master/example.php)
+
 # Bootstrapping Theme Classes
-Bootstrapping theme Service Provider(s) or other important classes before the application run:
+Bootstrapping theme Service Provider(s) or other important classes before the application runs:
 
 *For Laravel users: this code snippet is probably best placed at the bottom of `bootstrap/autoload.php` (after `require $compiledPath;`)*
 
 ```php
-\ThemeManager\Starter::bootstrapAutoload();
+( new \ThemeManager\Starter )->bootstrapAutoload();
 ```
 
 You can also optionally pass in a path to your themes folder if it's different than the default:
 ```php
-\ThemeManager\Starter::bootstrapAutoload( '/path/to/theme-folder' );
+( new \ThemeManager\Starter )->bootstrapAutoload( '/path/to/theme-folder' );
 ```
 
-# Error Handling
-This package requires that a `theme` file have at least a `name` field defined. As of version 1.1 it will handle and separate the invalid themes from the valid ones.
+
+#### Laravel Config
+Go to `config/theme-manager.php` and change the `required_fields` to the array of required field to be enforced.
+(see **Publish Config** below if config is not in your config folder).
+
+#### Injecting into Starter Class
+If you're not using the Laravel Service Provider, you can pass an array to the  `\ThemeManager\Starter` `start()` method:
+
+```php
+$basePath = null;
+$requiredFields = [ 'display_name', 'version', 'license', ];
+
+$starter = ( new \ThemeManager\Starter )->start( $basePath, $requiredFields );
+
+$themeManager = new \ThemeManager\ThemeManager( $starter );
+```
+
+You may also use the helper function as a shortcut:
+
+```php
+$themeManager = theme_manager( null, [ 'display_name', 'version', 'license', ] );
+```
 
 # Using with Laravel
 
@@ -72,6 +113,13 @@ You can add the ThemeManager Facade, to have easier access to the ThemeManager g
 'ThemeManager' => 'ThemeManager\Facade\ThemeManager',
 ```
 
+#### Publish Config
+Run:
+
+```
+php artisan vendor:publish --tag=theme
+```
+
 #### Usages:
 
 ```php
@@ -84,12 +132,8 @@ $themeName = $theme->getName();
 ```
 
 #### Override the base themes path:
+(See **Publish Config** section above if `theme-manager.php` isn't present)
 
-Publish config:
-
-```
-php artisan vendor:publish --tag=theme
-```
 Go to `config/theme-manager.php` and change the `base_path` to the folder you want to use.
 ```php
 <?php
@@ -105,10 +149,6 @@ If you have a secondary `themes` folder you can add all of the themes to the The
 ```php
 ThemeManager::addThemeLocation( __DIR__ . '/path/to/alternative/themes-folder' );
 ```
-
-# Using with any php application
-
-[example.php](https://github.com/monkblog/theme-manager/blob/master/example.php)
 
 ### License
 
