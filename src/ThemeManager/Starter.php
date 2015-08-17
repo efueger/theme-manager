@@ -6,7 +6,6 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use ThemeManager\Exceptions\MissingThemesFolder;
 use ThemeManager\Exceptions\NoThemeData;
-use ThemeManager\Exceptions\NoThemeName;
 
 class Starter
 {
@@ -27,6 +26,11 @@ class Starter
     private $finder;
 
     /**
+     * @var bool
+     */
+    private $secondaryThemes = false;
+
+    /**
      * @var array
      */
     private $themes = [ ];
@@ -36,8 +40,14 @@ class Starter
      */
     private $themesFolder;
 
-    public function __construct( Finder $finder = null )
+
+    /**
+     * @param bool|false  $secondaryThemes
+     * @param Finder|null $finder
+     */
+    public function __construct( $secondaryThemes = false, Finder $finder = null )
     {
+        $this->secondaryThemes = $secondaryThemes;
         $this->finder = $finder ?: new Finder;
     }
 
@@ -132,7 +142,7 @@ class Starter
     {
         try {
             $isYaml = ( stristr( $file, '.yaml' ) );
-            return $themes[ $path ] = new Theme( $path, $requiredFields, $isYaml );
+            return $themes[ $path ] = new Theme( $path, $requiredFields, $isYaml, $this->secondaryThemes );
         }
         catch( NoThemeData $error ) {
             if( $this->exceptionOnInvalid === false && $error->getTheme() ) {

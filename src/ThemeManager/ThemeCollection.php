@@ -25,6 +25,7 @@ class ThemeCollection extends Collection
     public function __construct( $items = [ ] )
     {
         $this->separateInvalidItems( $items );
+
         parent::__construct( $items );
 
         /* @var $theme Theme */

@@ -12,34 +12,19 @@ class Theme
 {
 
     /**
-     * @var array
+     * @var null|string
      */
-    private $info;
+    private $autoload = null;
+
+    /**
+     * @var string
+     */
+    protected $autoloadPath = 'vendor';
 
     /**
      * @var string
      */
     private $basePath;
-
-    /**
-     * @var string
-     */
-    private $ymlFileExtension;
-
-    /**
-     * @var string
-     */
-    private $yml;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var null|string
-     */
-    private $autoload = null;
 
     /**
      * @var boolean
@@ -57,29 +42,51 @@ class Theme
     protected $fileName = 'theme';
 
     /**
+     * @var array
+     */
+    private $info;
+
+    /**
+     * @var array
+     */
+    private $missingRequiredFields = [];
+
+    /**
      * @var string
      */
-    protected $autoloadPath = 'vendor';
+    private $name;
 
     /**
      * @var array
      */
-    protected $requiredFields;
+    protected $requiredFields = [];
 
     /**
-     * @var array
+     * @var string
      */
-    protected $missingRequiredFields = [];
+    private $type;
+
+    /**
+     * @var string
+     */
+    private $ymlFileExtension;
+
+    /**
+     * @var string
+     */
+    private $yml;
 
 
     /**
      * @param         $path
      * @param array   $requiredFields
      * @param boolean $yaml
+     * @param bool    $secondary
      */
-    public function __construct( $path, Array $requiredFields = [], $yaml = false )
+    public function __construct( $path, Array $requiredFields = [], $yaml = false, $secondary = false )
     {
         $this->basePath = $path;
+        $this->type = ( $secondary ) ? 'Secondary' : 'Primary';
         $this->requiredFields = $requiredFields;
         $this->ymlFileExtension = $yaml ? '.yaml' : '.yml';
 
@@ -232,6 +239,13 @@ class Theme
     public function getYmlPath()
     {
         return realpath( $this->yml ) ?: '{path undefined}';
+    }
+
+    /**
+     * @return string
+     */
+    public function getType() {
+        return $this->type;
     }
 
     /**
