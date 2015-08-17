@@ -26,6 +26,17 @@ composer require monkblog/theme-manager 1.1.*
 
 # Documentation
 
+- [Requiring Theme Meta Data Field(s)](https://github.com/monkblog/theme-manager#requiring-theme-meta-data-fields)
+- [Error Handling](https://github.com/monkblog/theme-manager#error-handling)
+- [Folder Structure](https://github.com/monkblog/theme-manager#folder-structure)
+- [Bootstrapping Theme Classes](https://github.com/monkblog/theme-manager#bootstrapping-theme-classes)
+- [Using with Laravel](https://github.com/monkblog/theme-manager#using-with-laravel)
+  - [Publish Config](https://github.com/monkblog/theme-manager#publish-config)
+  - [Usages](https://github.com/monkblog/theme-manager#usages)
+  - [Override the base themes path](https://github.com/monkblog/theme-manager#override-the-base-themes-path)
+  - [Adding more Themes folder to Manager](https://github.com/monkblog/theme-manager#adding-more-themes-folder-to-manager)
+- [License](https://github.com/monkblog/theme-manager#license)
+
 ## Requiring Theme Meta Data Field(s)
 This package requires that a `theme.yml`/`theme.yaml` file have at least a `name` field defined.
 
@@ -156,6 +167,6 @@ If you have a secondary `themes` folder you can add all of the themes to the The
 ThemeManager::addThemeLocation( __DIR__ . '/path/to/alternative/themes-folder' );
 ```
 
-### License
+## License
 
 This package is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
