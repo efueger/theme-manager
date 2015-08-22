@@ -83,10 +83,16 @@ name: my-theme
 ## Bootstrapping Theme Classes
 Bootstrapping theme Service Provider(s) or other important classes before the application runs:
 
-*For Laravel users: this code snippet is probably best placed at the bottom of `bootstrap/autoload.php` (after `require $compiledPath;`)*
+*For Laravel users: this code snippet is probably best placed at the bottom of `bootstrap/autoload.php`*
 
 ```php
 ( new \ThemeManager\Starter )->bootstrapAutoload();
+```
+
+OR
+
+```php
+theme_manager_starter()->bootstrapAutoload();
 ```
 
 You can also optionally pass in a path to your themes folder if it's different than the default:
